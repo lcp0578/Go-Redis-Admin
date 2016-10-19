@@ -17,7 +17,7 @@ func sayhelloName(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("key:", k)
 		fmt.Println("val:", strings.Join(v, ""))
 	}
-	w.Write("Hello, I'm coming...)
+	w.Write("Hello, I'm coming...")
 	//fmt.Fprintf(w, "Hello, I'm coming...") //这个写入到w的是输出到客户端的
 }
 func main() {

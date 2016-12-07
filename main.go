@@ -1,6 +1,8 @@
 package main
 
 import (
+	_ "Go-Redis-Admin/api/v1"
+	// "fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -53,6 +55,7 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 	// if /
 	if strings.Contains(pathinfo, "/") {
 		patterns := strings.Split(pathinfo, "/")
+		//fmt.Println(reflect.TypeOf(patterns))
 		switch patterns[0] {
 		case "api":
 			apiRouter(w, r, patterns)
@@ -68,10 +71,11 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 }
 
 // API router
-func apiRouter(w http.ResponseWriter, r *http.Request, patterns ...string) {
+func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 	handle := &Handlers{}
 	controller := reflect.ValueOf(handle)
-	action := patterns[1]
+	version := patterns[1]
+	action := version + "." + strings.ToUpper(patterns[2]) + "Action"
 	method := controller.MethodByName(action)
 	wr := reflect.ValueOf(w)
 	rr := reflect.ValueOf(r)
@@ -79,11 +83,11 @@ func apiRouter(w http.ResponseWriter, r *http.Request, patterns ...string) {
 }
 
 // template router
-func tplRouter(w http.ResponseWriter, r *http.Request, patterns ...string) {
+func tplRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 
 }
 
 // resource router
-func resRouter(w http.ResponseWriter, r *http.Request, patterns ...string) {
+func resRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 
 }

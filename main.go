@@ -4,7 +4,11 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"reflect"
+	"strings"
 )
+
+type Handlers struct{}
 
 func init() {
 
@@ -41,4 +45,45 @@ func login(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("views/login.html")
 	t.Execute(w, nil)
 	//w.Write([]byte("login"))
+}
+
+// main router
+func mainRouter(w http.ResponseWriter, r *http.Request) {
+	pathinfo := strings.Trim(r.URL.Path, "/")
+	// if /
+	if strings.Contains(pathinfo, "/") {
+		patterns := strings.Split(pathinfo, "/")
+		switch patterns[0] {
+		case "api":
+			apiRouter(w, r, patterns)
+		case "tpl":
+			tplRouter(w, r, patterns)
+		case "res":
+			resRouter(w, r, patterns)
+		default:
+		}
+	} else {
+		// default router
+	}
+}
+
+// API router
+func apiRouter(w http.ResponseWriter, r *http.Request, patterns ...string) {
+	handle := &Handlers{}
+	controller := reflect.ValueOf(handle)
+	action := patterns[1]
+	method := controller.MethodByName(action)
+	wr := reflect.ValueOf(w)
+	rr := reflect.ValueOf(r)
+	method.Call([]reflect.Value{wr, rr})
+}
+
+// template router
+func tplRouter(w http.ResponseWriter, r *http.Request, patterns ...string) {
+
+}
+
+// resource router
+func resRouter(w http.ResponseWriter, r *http.Request, patterns ...string) {
+
 }

@@ -20,6 +20,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", sayhelloName) //设置访问的路由
 	http.HandleFunc("/login", login)
+	http.Handle("/api/", http.HandlerFunc(mainRouter))
 	err := http.ListenAndServe(":9090", nil) //设置监听的端口
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
@@ -52,10 +53,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 // main router
 func mainRouter(w http.ResponseWriter, r *http.Request) {
 	pathinfo := strings.Trim(r.URL.Path, "/")
+	log.Println(pathinfo)
 	// if /
 	if strings.Contains(pathinfo, "/") {
 		patterns := strings.Split(pathinfo, "/")
 		//fmt.Println(reflect.TypeOf(patterns))
+		log.Println("patterns:", patterns)
 		switch patterns[0] {
 		case "api":
 			apiRouter(w, r, patterns)
@@ -76,6 +79,7 @@ func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 	controller := reflect.ValueOf(handle)
 	version := patterns[1]
 	action := version + "." + strings.ToUpper(patterns[2]) + "Action"
+	log.Println("action:", action)
 	method := controller.MethodByName(action)
 	wr := reflect.ValueOf(w)
 	rr := reflect.ValueOf(r)

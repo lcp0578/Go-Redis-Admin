@@ -76,7 +76,7 @@ func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 	handle := &v1.Handlers{}
 	controller := reflect.ValueOf(handle)
 	version := patterns[1]
-	action := version + "." + strings.ToUpper(patterns[2]) + "Action"
+	action := version + "." + strings.Title(patterns[2]) + "Action"
 	log.Println("action:", action)
 	method := controller.MethodByName(action)
 	wr := reflect.ValueOf(w)

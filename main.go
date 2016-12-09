@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "Go-Redis-Admin/api/v1"
+	"Go-Redis-Admin/api/v1"
 	// "fmt"
 	"html/template"
 	"log"
@@ -9,8 +9,6 @@ import (
 	"reflect"
 	"strings"
 )
-
-type Handlers struct{}
 
 func init() {
 
@@ -75,7 +73,7 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 
 // API router
 func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
-	handle := &Handlers{}
+	handle := &v1.Handlers{}
 	controller := reflect.ValueOf(handle)
 	version := patterns[1]
 	action := version + "." + strings.ToUpper(patterns[2]) + "Action"

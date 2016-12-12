@@ -2,6 +2,7 @@ package main
 
 import (
 	"Go-Redis-Admin/api/v1"
+	"Go-Redis-Admin/common/exception"
 	// "fmt"
 	"html/template"
 	"log"
@@ -52,9 +53,11 @@ func login(w http.ResponseWriter, r *http.Request) {
 func mainRouter(w http.ResponseWriter, r *http.Request) {
 	pathinfo := strings.Trim(r.URL.Path, "/")
 	log.Println(pathinfo)
+
+	var patterns []string
 	// if /
 	if strings.Contains(pathinfo, "/") {
-		patterns := strings.Split(pathinfo, "/")
+		patterns = strings.Split(pathinfo, "/")
 		//fmt.Println(reflect.TypeOf(patterns))
 		log.Println("patterns:", patterns)
 		switch patterns[0] {
@@ -73,10 +76,18 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 
 // API router
 func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
-	handle := &v1.Handlers{}
-	controller := reflect.ValueOf(handle)
 	version := patterns[1]
-	action := version + "." + strings.Title(patterns[2]) + "Action"
+	var handle interface{}
+	if version == "v1" {
+		handle = &v1.Handlers{}
+	} else {
+		// version error
+		handle = &exception.Handlers{}
+		patterns[2] = "exception"
+	}
+	controller := reflect.ValueOf(handle)
+	log.Println(controller)
+	action := strings.Title(patterns[2]) + "Action"
 	log.Println("action:", action)
 	method := controller.MethodByName(action)
 	wr := reflect.ValueOf(w)

@@ -5,8 +5,6 @@ import (
 	"net/http"
 )
 
-type Handlers struct{}
-
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("API Login Action")
 	r.ParseForm()

@@ -54,12 +54,13 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 	pathinfo := strings.Trim(r.URL.Path, "/")
 	log.Println(pathinfo)
 
-	var patterns []string
 	// if /
 	if strings.Contains(pathinfo, "/") {
-		patterns = strings.Split(pathinfo, "/")
-		if len(patterns) == 2 {
-			patterns[2] = "index"
+		patterns := strings.Split(pathinfo, "/")
+		log.Println(patterns)
+		log.Println("len:", len(patterns))
+		if len(patterns) < 3 {
+			patterns = append(patterns, "index")
 		}
 		//fmt.Println(reflect.TypeOf(patterns))
 		log.Println("patterns:", patterns)

@@ -1,9 +1,9 @@
 package view
 
 import (
+	"html/template"
 	"log"
 	"net/http"
-	"text/template"
 )
 
 type Handlers struct{}
@@ -22,7 +22,10 @@ func (h *Handlers) IndexAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view content")
-	t, _ := template.ParseFiles("views/content.html")
+	t, err := template.ParseFiles("views/content.html")
+	if err != nil {
+		log.Println(err.Error())
+	}
 	t.Execute(w, nil)
 }
 
@@ -35,8 +38,17 @@ func (h *Handlers) SystemAction(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 }
 
+func (h *Handlers) TestAction(w http.ResponseWriter, r *http.Request) {
+	log.Println("view test")
+	t, err := template.ParseFiles("views/test.html")
+	if err != nil {
+		log.Println("parse view error", err)
+	}
+	t.Execute(w, nil)
+}
+
 func (h *Handlers) NotFoundAction(w http.ResponseWriter, r *http.Request) {
-	log.Println("view System")
+	log.Println("view Not Found")
 	t, _ := template.ParseFiles("views/notfound.html")
 	t.Execute(w, nil)
 }

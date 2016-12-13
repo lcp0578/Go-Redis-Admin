@@ -5,11 +5,11 @@ import (
 	"Go-Redis-Admin/common/exception"
 	"Go-Redis-Admin/controller/view"
 	// "fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"reflect"
 	"strings"
+	"text/template"
 )
 
 func init() {

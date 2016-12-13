@@ -1,0 +1,15 @@
+<html>  
+        <head>  
+        </head>  
+        <body>  
+            <form action="/test" method="POST"> 
+			<span>hehe</span> 
+                    {{with .Test}}  
+                        {{range .}}  
+                            <input type="radio" name="test" value={{.Name}}/>{{.Name}}<br/>  
+                        {{end}}  
+                    {{end}}  
+                    <input type="submit" value="submit"/>  
+            </form>  
+        </body>  
+</html>  

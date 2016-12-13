@@ -1,9 +1,9 @@
 package view
 
 import (
-	"html/template"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 type Handlers struct{}
@@ -28,7 +28,10 @@ func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) SystemAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view System")
-	t, _ := template.ParseFiles("views/system.html")
+	t, err := template.ParseFiles("views/system.html")
+	if err != nil {
+		log.Println("parse view error", err)
+	}
 	t.Execute(w, nil)
 }
 

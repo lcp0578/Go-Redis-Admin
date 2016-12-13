@@ -58,6 +58,9 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 	// if /
 	if strings.Contains(pathinfo, "/") {
 		patterns = strings.Split(pathinfo, "/")
+		if len(patterns) == 2 {
+			patterns[2] = "index"
+		}
 		//fmt.Println(reflect.TypeOf(patterns))
 		log.Println("patterns:", patterns)
 		switch patterns[0] {

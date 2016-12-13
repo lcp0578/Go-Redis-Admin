@@ -74,7 +74,14 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 			tplRouter(w, r, patterns)
 		}
 	} else {
-		// default router
+		// default tpl router
+		patterns := make([]string, 0, 3)
+		if pathinfo == "" {
+			pathinfo = "index"
+		}
+
+		patterns = append(patterns, pathinfo)
+		tplRouter(w, r, patterns)
 	}
 }
 
@@ -115,7 +122,7 @@ func tplRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 	method := controller.MethodByName(action)
 	if !method.IsValid() {
 		log.Println("error action:", action)
-		method = controller.MethodByName("IndexAction")
+		method = controller.MethodByName("NotFoundAction")
 	}
 	wr := reflect.ValueOf(w)
 	rr := reflect.ValueOf(r)

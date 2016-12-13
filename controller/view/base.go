@@ -31,3 +31,9 @@ func (h *Handlers) SystemAction(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("views/system.html")
 	t.Execute(w, nil)
 }
+
+func (h *Handlers) NotFoundAction(w http.ResponseWriter, r *http.Request) {
+	log.Println("view System")
+	t, _ := template.ParseFiles("views/notfound.html")
+	t.Execute(w, nil)
+}

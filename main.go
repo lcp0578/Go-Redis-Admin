@@ -3,6 +3,7 @@ package main
 import (
 	"Go-Redis-Admin/api/v1"
 	"Go-Redis-Admin/common/exception"
+	"Go-Redis-Admin/controller/view"
 	// "fmt"
 	"html/template"
 	"log"
@@ -17,9 +18,9 @@ func init() {
 
 func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", sayhelloName) //设置访问的路由
-	http.HandleFunc("/login", login)
-	http.Handle("/api/", http.HandlerFunc(mainRouter))
+	//http.HandleFunc("/", sayhelloName) //设置访问的路由
+	//http.HandleFunc("/login", login)
+	http.Handle("/", http.HandlerFunc(mainRouter))
 	err := http.ListenAndServe(":9090", nil) //设置监听的端口
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
@@ -52,7 +53,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 // main router
 func mainRouter(w http.ResponseWriter, r *http.Request) {
 	pathinfo := strings.Trim(r.URL.Path, "/")
-	log.Println(pathinfo)
+	log.Println("main pathinfo", pathinfo)
 
 	// if /
 	if strings.Contains(pathinfo, "/") {
@@ -67,11 +68,10 @@ func mainRouter(w http.ResponseWriter, r *http.Request) {
 		switch patterns[0] {
 		case "api":
 			apiRouter(w, r, patterns)
-		case "tpl":
-			tplRouter(w, r, patterns)
 		case "res":
 			resRouter(w, r, patterns)
 		default:
+			tplRouter(w, r, patterns)
 		}
 	} else {
 		// default router
@@ -94,6 +94,11 @@ func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 	action := strings.Title(patterns[2]) + "Action"
 	log.Println("action:", action)
 	method := controller.MethodByName(action)
+
+	if !method.IsValid() {
+		log.Println("error action:", action)
+		method = controller.MethodByName("IndexAction")
+	}
 	wr := reflect.ValueOf(w)
 	rr := reflect.ValueOf(r)
 	log.Println(method)
@@ -102,7 +107,20 @@ func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 
 // template router
 func tplRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
-
+	handle := &view.Handlers{}
+	controller := reflect.ValueOf(handle)
+	log.Println(controller)
+	action := strings.Title(patterns[0]) + "Action"
+	log.Println("action:", action)
+	method := controller.MethodByName(action)
+	if !method.IsValid() {
+		log.Println("error action:", action)
+		method = controller.MethodByName("IndexAction")
+	}
+	wr := reflect.ValueOf(w)
+	rr := reflect.ValueOf(r)
+	log.Println(method)
+	method.Call([]reflect.Value{wr, rr})
 }
 
 // resource router

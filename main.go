@@ -49,7 +49,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 // main router
 func mainRouter(w http.ResponseWriter, r *http.Request) {
-	pathinfo := strings.Trim(r.URL.Path, "/")
+	pathinfo := strings.ToLower(strings.Trim(r.URL.Path, "/"))
 	log.Println("main pathinfo", pathinfo)
 
 	// if /

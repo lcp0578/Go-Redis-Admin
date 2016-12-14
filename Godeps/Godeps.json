@@ -2,5 +2,11 @@
 	"ImportPath": "Go-Redis-Admin",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "github.com/dchest/captcha",
+			"Comment": "weekly.2012-03-04-18-g9e95214",
+			"Rev": "9e952142169c3cd6268c6482a3a61c121536aca2"
+		}
+	]
 }

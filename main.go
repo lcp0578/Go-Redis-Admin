@@ -17,9 +17,6 @@ func init() {
 }
 
 func main() {
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	//http.HandleFunc("/", sayhelloName) //设置访问的路由
-	//http.HandleFunc("/login", login)
 	http.Handle("/", http.HandlerFunc(mainRouter))
 	err := http.ListenAndServe(":9090", nil) //设置监听的端口
 	if err != nil {
@@ -132,5 +129,6 @@ func tplRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 
 // resource router
 func resRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
-
+	log.Println("/" + patterns[0] + "/")
+	http.Handle("/"+patterns[0]+"/", http.StripPrefix("/"+patterns[0]+"/", http.FileServer(http.Dir("static"))))
 }

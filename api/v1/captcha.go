@@ -27,7 +27,8 @@ var (
 	ErrNotFound = errors.New("captcha: id not found")
 )
 
-func (h *Handlers) NewAction(w http.ResponseWriter, r *http.Request) {
+func (h *Handlers) NewCaptchaAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("API V1, captcha Index")
-	captcha.New()
+	var captchaId = captcha.New()
+	captcha.WriteImage(w, captchaId, StdWidth, StdHeight)
 }

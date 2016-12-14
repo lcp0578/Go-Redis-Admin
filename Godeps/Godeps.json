@@ -2,11 +2,25 @@
 	"ImportPath": "Go-Redis-Admin",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
+	"Packages": [
+		"github.com/garyburd/redigo/redis",
+		"github.com/dchest/captcha"
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/dchest/captcha",
 			"Comment": "weekly.2012-03-04-18-g9e95214",
 			"Rev": "9e952142169c3cd6268c6482a3a61c121536aca2"
+		},
+		{
+			"ImportPath": "github.com/garyburd/redigo/internal",
+			"Comment": "v1.0.0-12-g0708def",
+			"Rev": "0708def8b0cf3a05acdf44a7f28b864c2958921d"
+		},
+		{
+			"ImportPath": "github.com/garyburd/redigo/redis",
+			"Comment": "v1.0.0-12-g0708def",
+			"Rev": "0708def8b0cf3a05acdf44a7f28b864c2958921d"
 		}
 	]
 }

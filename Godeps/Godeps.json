@@ -3,6 +3,7 @@
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
 	"Packages": [
+		"github.com/go-sql-driver/mysql",
 		"github.com/garyburd/redigo/redis",
 		"github.com/dchest/captcha"
 	],
@@ -21,6 +22,11 @@
 			"ImportPath": "github.com/garyburd/redigo/redis",
 			"Comment": "v1.0.0-12-g0708def",
 			"Rev": "0708def8b0cf3a05acdf44a7f28b864c2958921d"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.2-198-g0b58b37",
+			"Rev": "0b58b37b664c21f3010e836f1b931e1d0b0b0685"
 		}
 	]
 }

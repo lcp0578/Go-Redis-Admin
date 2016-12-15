@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"Go-Redis-Admin/common/session"
 	"errors"
 	"github.com/dchest/captcha"
 	"log"
@@ -30,6 +31,7 @@ var (
 func (h *Handlers) NewcaptchaAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("API V1, captcha new")
 	var captchaId = captcha.New()
+	session.Put(r, "captchaId", captchaId)
 	captcha.WriteImage(w, captchaId, StdWidth, StdHeight)
 }
 

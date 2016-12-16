@@ -31,14 +31,21 @@ var (
 func (h *Handlers) NewcaptchaAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("API V1, captcha new")
 	var captchaId = captcha.New()
-	session.Put(r, "captchaId", captchaId)
+	result := session.Put(r, "captchaId", captchaId)
+	log.Println(result)
+	log.Println("API V1, captcha captchaId", captchaId)
 	captcha.WriteImage(w, captchaId, StdWidth, StdHeight)
 }
 
 func (h *Handlers) ReloadcaptchaAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("API V1, captcha reload")
-	var captchaId = captcha.New()
-	captcha.WriteImage(w, captchaId, StdWidth, StdHeight)
+	captchaId := session.Get(r, "captchaId")
+	log.Println("API V1, captcha reload captchaId", captchaId)
+	if captcha.Reload(captchaId) {
+		captcha.WriteImage(w, captchaId, StdWidth, StdHeight)
+	} else {
+		log.Println("API V1, captcha reload faild")
+	}
 }
 
 func (h *Handlers) VerifycaptchaAction(w http.ResponseWriter, r *http.Request) {

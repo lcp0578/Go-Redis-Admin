@@ -4,6 +4,7 @@ import (
 	"github.com/alexedwards/scs/engine/memstore"
 	"github.com/alexedwards/scs/session"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -15,17 +16,19 @@ func init() {
 	// Initialise the session manager middleware, passing in the storage engine as
 	// the first parameter. This middleware will automatically handle loading and
 	// saving of session data for you.
-	sessionManager := session.Manage(engine)
+	// sessionManager := session.Manage(engine)
+	session.Manage(engine)
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/put", putHandler)
-	mux.HandleFunc("/get", getHandler)
-	http.ListenAndServe(":4000", sessionManager(mux))
+	// mux := http.NewServeMux()
+	// mux.HandleFunc("/put", putHandler)
+	// mux.HandleFunc("/get", getHandler)
+	// http.ListenAndServe(":4000", sessionManager(mux))
 }
 
 func Put(r *http.Request, key, val string) bool {
 	err := session.PutString(r, key, val)
 	if err != nil {
+		log.Println(err.Error())
 		return false
 	}
 	return true

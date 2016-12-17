@@ -49,19 +49,29 @@ func (h *Handlers) ReloadcaptchaAction(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) VerifycaptchaAction(w http.ResponseWriter, r *http.Request) {
+	var data = map[string]string{}
+	jr := &response.JsonResponse{
+		0,
+		"faild",
+		data,
+	}
 	query := r.URL.Query()
-	var captchaVal =  query["val"][0]
+	log.Println(query)
+	val, ok := query["val"]
+	if !ok {
+		jr.Code = 2
+		jr.Msg = "val empty"
+		response.OuputJson(w, jr)
+		return
+	}
+	captchaVal := val[0]
 	log.Println("API V1, captcha verify")
 	var captchaId = cookie.Get(r, "captchaId")
-	var result = captcha.Verify(captchaId,[]byte(captchaVal))
-	if result {
-		var jdata = response.JsonResponse{
-			Code : 1,
-			Msg: "success",
-			Data: []
-		}
-	}else {
+	var result = captcha.Verify(captchaId, []byte(captchaVal))
 
+	if result {
+		jr.Code = 1
+		jr.Msg = "success"
 	}
-	jdata.Encode()
+	response.OuputJson(w, jr)
 }

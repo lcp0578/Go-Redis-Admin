@@ -1,17 +1,24 @@
 package response
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 func init() {
 
 }
+
 type JsonResponse struct {
 	Code int
-	Msg string
-	Data []string
+	Msg  string
+	Data map[string]string
 }
-func (json *JsonResponse)Encode(code int, msg string, data []string) string {
-	encoder := json.NewEncoder()
-	var jdata = &JsonResponse{Code:code, Msg:msg, Data:data}
-	return encoder.Encode(jdata)
+
+func OuputJson(w http.ResponseWriter, jr *JsonResponse) {
+	encoder := json.NewEncoder(w)
+	err := encoder.Encode(jr)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }

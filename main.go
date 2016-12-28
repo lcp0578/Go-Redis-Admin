@@ -22,19 +22,6 @@ func init() {
 func main() {
 	http.Handle("/", http.HandlerFunc(mainRouter))
 	err := http.ListenAndServe(":9090", nil) //设置监听的端口
-	// Initialise a new storage engine. Here we use the memstore package, but the approach
-	// is the same no matter which back-end store you choose.
-	engine := memstore.New(0)
-
-	// Initialise the session manager middleware, passing in the storage engine as
-	// the first parameter. This middleware will automatically handle loading and
-	// saving of session data for you.
-	sessionManager := session.Manage(engine)
-
-	mux := http.NewServeMux()
-	mux.HandleFunc("/put", putHandler)
-	mux.HandleFunc("/get", getHandler)
-	http.ListenAndServe(":4000", sessionManager(mux))
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
@@ -148,24 +135,4 @@ func resRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 	log.Println("/" + patterns[0] + "/")
 	log.Println("Dir:", http.Dir("web/static"))
 	http.Handle("/"+patterns[0]+"/", http.StripPrefix("/"+patterns[0]+"/", http.FileServer(http.Dir("web/static"))))
-}
-
-func putHandler(w http.ResponseWriter, r *http.Request) {
-	// Use the PutString helper to store a new key and associated string value in
-	// the session data. Helpers are also available for many other data types.
-	err := session.PutString(r, "message", "Hello from a session!")
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-	}
-}
-
-func getHandler(w http.ResponseWriter, r *http.Request) {
-	// Use the GetString helper to retreive the string value associated with a key.
-	// The zero value is returned if the key does not exist.
-	msg, err := session.GetString(r, "message")
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	io.WriteString(w, msg)
 }

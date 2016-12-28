@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"Go-Redis-Admin/common/cookie"
-	"Go-Redis-Admin/common/response"
+	"Go-Redis-Admin/src/common/cookie"
+	"Go-Redis-Admin/src/common/response"
 	"errors"
 	"github.com/dchest/captcha"
 	"log"

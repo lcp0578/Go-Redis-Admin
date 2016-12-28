@@ -1,4 +1,4 @@
-package view
+package controller
 
 import (
 	"html/template"
@@ -10,19 +10,19 @@ type Handlers struct{}
 
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view login")
-	t, _ := template.ParseFiles("views/login.html")
+	t, _ := template.ParseFiles("src/views/login.html")
 	t.Execute(w, nil)
 }
 
 func (h *Handlers) IndexAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
-	t, _ := template.ParseFiles("views/index.html")
+	t, _ := template.ParseFiles("src/views/index.html")
 	t.Execute(w, nil)
 }
 
 func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view content")
-	t, err := template.ParseFiles("views/content.html")
+	t, err := template.ParseFiles("src/views/content.html")
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -31,7 +31,7 @@ func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) SystemAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view System")
-	t, err := template.ParseFiles("views/system.html")
+	t, err := template.ParseFiles("src/views/system.html")
 	if err != nil {
 		log.Println("parse view error", err)
 	}
@@ -40,7 +40,7 @@ func (h *Handlers) SystemAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) TestAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view test")
-	t, err := template.ParseFiles("views/test.html")
+	t, err := template.ParseFiles("src/views/test.html")
 	if err != nil {
 		log.Println("parse view error", err)
 	}
@@ -49,6 +49,6 @@ func (h *Handlers) TestAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) NotFoundAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view Not Found")
-	t, _ := template.ParseFiles("views/notfound.html")
+	t, _ := template.ParseFiles("src/views/notfound.html")
 	t.Execute(w, nil)
 }

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Go-Redis-Admin/api/v1"
-	"Go-Redis-Admin/common/exception"
-	"Go-Redis-Admin/controller/view"
+	"Go-Redis-Admin/src/api/v1"
+	"Go-Redis-Admin/src/common/exception"
+	"Go-Redis-Admin/src/controller"
 	"github.com/alexedwards/scs/engine/memstore"
 	"github.com/alexedwards/scs/session"
 	"io"
@@ -127,7 +127,7 @@ func apiRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 
 // template router
 func tplRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
-	handle := &view.Handlers{}
+	handle := &controller.Handlers{}
 	controller := reflect.ValueOf(handle)
 	log.Println(controller)
 	action := strings.Title(patterns[0]) + "Action"
@@ -146,7 +146,8 @@ func tplRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 // resource router
 func resRouter(w http.ResponseWriter, r *http.Request, patterns []string) {
 	log.Println("/" + patterns[0] + "/")
-	http.Handle("/"+patterns[0]+"/", http.StripPrefix("/"+patterns[0]+"/", http.FileServer(http.Dir("static"))))
+	log.Println("Dir:", http.Dir("web/static"))
+	http.Handle("/"+patterns[0]+"/", http.StripPrefix("/"+patterns[0]+"/", http.FileServer(http.Dir("web/static"))))
 }
 
 func putHandler(w http.ResponseWriter, r *http.Request) {

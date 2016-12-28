@@ -4,8 +4,6 @@ import (
 	"Go-Redis-Admin/src/api/v1"
 	"Go-Redis-Admin/src/common/exception"
 	"Go-Redis-Admin/src/controller"
-	"github.com/alexedwards/scs/engine/memstore"
-	"github.com/alexedwards/scs/session"
 	"io"
 	// "fmt"
 	"log"

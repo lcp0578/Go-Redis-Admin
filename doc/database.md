@@ -3,7 +3,7 @@
 ### 管理员用户表
 
 表的结构 `gra_user`
-<code>
+    
 CREATE TABLE `gra_user` (
   `id` int(11) UNSIGNED NOT NULL COMMENT '用户自增ID',
   `username` varchar(32) NOT NULL COMMENT '用户名',
@@ -14,13 +14,14 @@ CREATE TABLE `gra_user` (
   `last_ip` varchar(15) NOT NULL COMMENT '最后一次登录IP',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-</code>
+    
+
 
 ### Redis配置表
 
 表的结构 `gra_redis`
 
-<code>
+    
 CREATE TABLE `gra_redis` (
   `id` int(11) UNSIGNED NOT NULL COMMENT '自增ID',
   `mark` varchar(64) NOT NULL COMMENT '链接实例的名称',
@@ -35,4 +36,4 @@ CREATE TABLE `gra_redis` (
   `editor_id` int(10) UNSIGNED NOT NULL COMMENT '编辑者ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-</code>
+    

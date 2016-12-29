@@ -2,9 +2,7 @@
 
 ### 管理员用户表
 
---
--- 表的结构 `gra_user`
---
+表的结构 `gra_user`
 <code>
 CREATE TABLE `gra_user` (
   `id` int(11) UNSIGNED NOT NULL COMMENT '用户自增ID',
@@ -19,9 +17,9 @@ CREATE TABLE `gra_user` (
 </code>
 
 ### Redis配置表
---
--- 表的结构 `gra_redis`
---
+
+表的结构 `gra_redis`
+
 <code>
 CREATE TABLE `gra_redis` (
   `id` int(11) UNSIGNED NOT NULL COMMENT '自增ID',

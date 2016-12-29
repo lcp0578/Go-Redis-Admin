@@ -7,3 +7,5 @@
 
 
 Another web interface to manage Redis databases. Power by golang and pintuer.
+
+database: See [database](doc/database.md) for details.

@@ -1,16 +1,16 @@
 package mysql
 
 import (
-	_ "Go-Redis-Admin/app/config"
+	"Go-Redis-Admin/app/config"
 	"database/sql"
 	"fmt"
-	"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"strconv"
 	"time"
 )
 
-func connet() (db *sql.DB) {
-	db, err := sql.Open("mysql", MysqlDsn)
+func Connet() (db *sql.DB) {
+	db, err := sql.Open("mysql", config.MysqlDsn)
 	if err != nil {
 		fmt.Println(err)
 		return

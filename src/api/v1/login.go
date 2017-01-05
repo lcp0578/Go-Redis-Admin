@@ -1,12 +1,13 @@
 package v1
 
 import (
-	//"Go-Redis-Admin/src/common/mysql"
+	"Go-Redis-Admin/src/common/mysql"
 	"Go-Redis-Admin/src/common/response"
 	"fmt"
 	"log"
 	"net/http"
 	// "reflect"
+	//"strings"
 )
 
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +26,12 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println("API Login Action")
 	r.ParseForm() //解析参数，默认是不会解析的
+	// for k, v := range r.Form {
+	// 	fmt.Println("key:", k)
+	// 	fmt.Println("val:", strings.Join(v, ""))
+	// }
+	// fmt.Println("username", r.FormValue("username"))
+	// fmt.Println("password", r.FormValue("password"))
 	var username = r.FormValue("username")
 	var password = r.FormValue("password")
 	if username == "" {
@@ -40,11 +47,16 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 校验密码
-
+	checkPass(username, password)
 	fmt.Println(r.Method)
 	w.Write([]byte("API V1, login"))
 }
 
 func checkPass(username, password string) {
-	//mysql.connet()
+	db := mysql.Connet()
+	var user *mysql.UserEntity
+	user = mysql.GetUser(db, username)
+	fmt.Println(user)
+	// 关闭链接
+	mysql.Close(db)
 }

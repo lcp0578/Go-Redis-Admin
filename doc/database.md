@@ -5,7 +5,7 @@
 表的结构 `gra_user`
     
     CREATE TABLE `gra_user` (
-      `id` int(11) UNSIGNED NOT NULL COMMENT '用户自增ID',
+      `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户自增ID',
       `username` varchar(32) NOT NULL COMMENT '用户名',
       `password` char(32) NOT NULL COMMENT '用户密码，32位',
       `salt` char(8) NOT NULL COMMENT '用户的随机盐值，8位',
@@ -23,7 +23,7 @@
 
     
     CREATE TABLE `gra_redis` (
-      `id` int(11) UNSIGNED NOT NULL COMMENT '自增ID',
+      `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
       `mark` varchar(64) NOT NULL COMMENT '链接实例的名称',
       `network` tinyint(4) NOT NULL DEFAULT '0' COMMENT '链接类型, 0 TCP; 1 unix domain sockets',
       `address` varchar(255) NOT NULL COMMENT '链接地址',

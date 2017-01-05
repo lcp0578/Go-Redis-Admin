@@ -3,3 +3,4 @@
  *  test configure
  *
  **/
+package config

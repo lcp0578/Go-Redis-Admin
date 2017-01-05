@@ -1,6 +1,7 @@
 package mysql
 
 import (
+	_ "Go-Redis-Admin/app/config"
 	"database/sql"
 	"fmt"
 	"github.com/go-sql-driver/mysql"
@@ -8,8 +9,20 @@ import (
 	"time"
 )
 
-func conent() {
-	mysql.Config()
+func connet() (db *sql.DB) {
+	db, err := sql.Open("mysql", MysqlDsn)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	return
+}
+
+func Close(db *sql.DB) {
+	db.Close()
+}
+func conent2() {
+	//mysql.Config()
 	db, err := sql.Open("mysql", "root:lcp0578@tcp(127.0.0.1:3306)/go_test?charset=utf8")
 	if err != nil {
 		fmt.Println(err)

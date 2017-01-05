@@ -1,11 +1,12 @@
 package v1
 
 import (
+	//"Go-Redis-Admin/src/common/mysql"
 	"Go-Redis-Admin/src/common/response"
 	"fmt"
 	"log"
 	"net/http"
-	"reflect"
+	// "reflect"
 )
 
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
@@ -42,4 +43,8 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(r.Method)
 	w.Write([]byte("API V1, login"))
+}
+
+func checkPass(username, password string) {
+	//mysql.connet()
 }

@@ -24,7 +24,7 @@ func transaction() {
 		fmt.Println("Rollback")
 		trans.Rollback()
 	} else {
-		Println("Commit")
+		fmt.Println("Commit")
 		trans.Commit()
 	}
 

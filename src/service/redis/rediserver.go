@@ -1,23 +1,20 @@
-package redis
+package redisserver
 
 import (
 	"fmt"
 	"github.com/garyburd/redigo/redis"
 )
 type redisapi struct{
+
 }
-func (c *redisapi) Connect() {
-	conn, err := redis.Dial("tcp", "127.0.0.1:6379")
+func (this *redisapi) Connect(network string,addredd string) {
+	conn, err := redis.Dial(network, addredd)
 	if err != nil {
 		fmt.Println("connect error:", err.Error())
 	} else {
 		fmt.Println("connect redis success")
 	}
-	r, err_do := conn.Do("set", "age", 24)
-	if err_do != nil {
-		fmt.Println("do error:", err.Error())
-	} else {
-		fmt.Println(r)
-	}
+	c:=NewConnection(conn)
+	_=c
 	//conn.Close()
 }

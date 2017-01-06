@@ -6,25 +6,38 @@ import (
 )
 
 type UserEntity struct {
-	id       int32  `用户自增ID`
-	username string `用户名`
-	password string `用户密码，32位`
-	salt     string `用户的随机盐值，8位`
-	add_time string `创建时间`
-	status   int8   `用户状态，0禁用;1正常`
-	last_ip  string `最后一次登录IP`
+	Id       int32  `用户自增ID`
+	Username string `用户名`
+	Password string `用户密码，32位`
+	Salt     string `用户的随机盐值，8位`
+	Add_time string `创建时间`
+	Status   int8   `用户状态，0禁用;1正常`
+	Last_ip  string `最后一次登录IP`
 }
 
-func GetUser(db *sql.DB, username string) (u *UserEntity) {
-	// GET ONE ROW
-	var row *sql.Row
-	row = db.QueryRow("SELECT * FROM gra_user WHERE username=?", username)
-	var ue *UserEntity
-	// GET VLAUES
-	var err = row.Scan(ue.id, ue.username, ue.password, ue.salt, ue.add_time, ue.status, ue.last_ip)
+func GetUserPass(username string) (*UserEntity, error) {
+	db := Connet()
+	var ue UserEntity
+	err := db.QueryRow("SELECT id,password,salt FROM gra_user WHERE username=?", username).Scan(&ue.Id, &ue.Password, &ue.Salt)
+	Close(db)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return &UserEntity{}, err
+	} else {
+		return &ue, nil
 	}
-	return ue
+}
+
+func SetLastLoginIp(id int32, ip string) (bool, error) {
+	db := Connet()
+	// prepare SQL
+	var stmt *sql.Stmt
+	stmt, err = db.Prepare("UPDATE gra_user SET `last_ip` = ? WHERE id = ?")
+	if err != nil {
+		return false, err
+	}
+	result, err := stmt.Exec(ip, id)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }

@@ -1,13 +1,11 @@
 package v1
 
 import (
+	"Go-Redis-Admin/src/common/crypto"
 	"Go-Redis-Admin/src/common/mysql"
 	"Go-Redis-Admin/src/common/response"
-	"fmt"
 	"log"
 	"net/http"
-	// "reflect"
-	//"strings"
 )
 
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
@@ -41,22 +39,32 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if password == "" {
-		jr.Code = 3
+		jr.Code = 4
 		jr.Msg = "密码不能为空"
 		response.OuputJson(w, jr)
 		return
 	}
 	// 校验密码
-	checkPass(username, password)
-	fmt.Println(r.Method)
+	if !checkPass(username, password) {
+		jr.Code = 5
+		jr.Msg = "用户名或密码不正确"
+		response.OuputJson(w, jr)
+		return
+	}
+	// 更新登录IP
 	w.Write([]byte("API V1, login"))
 }
 
-func checkPass(username, password string) {
-	db := mysql.Connet()
+func checkPass(username, password string) bool {
 	var user *mysql.UserEntity
-	user = mysql.GetUser(db, username)
-	fmt.Println(user)
-	// 关闭链接
-	mysql.Close(db)
+	user, err := mysql.GetUserPass(username)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	if user.Password != crypto.Md5Double(password, user.Salt) {
+		log.Println("password error")
+		return false
+	}
+	return true
 }

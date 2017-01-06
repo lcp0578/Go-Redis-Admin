@@ -1,0 +1,17 @@
+{
+	"ImportPath": "Go-Redis-Admin/src/service/redis",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v75",
+	"Deps": [
+		{
+			"ImportPath": "github.com/garyburd/redigo/internal",
+			"Comment": "v1.0.0-16-g8c052d8",
+			"Rev": "8c052d82153967815d9093a7e9d3e7fd2e554861"
+		},
+		{
+			"ImportPath": "github.com/garyburd/redigo/redis",
+			"Comment": "v1.0.0-16-g8c052d8",
+			"Rev": "8c052d82153967815d9093a7e9d3e7fd2e554861"
+		}
+	]
+}

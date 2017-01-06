@@ -1,0 +1,17 @@
+{
+	"ImportPath": "Go-Redis-Admin/src/api/v1",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v75",
+	"Deps": [
+		{
+			"ImportPath": "github.com/dchest/captcha",
+			"Comment": "weekly.2012-03-04-18-g9e95214",
+			"Rev": "9e952142169c3cd6268c6482a3a61c121536aca2"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.2-175-g1309049",
+			"Rev": "1309049fd598c1faa0290fd70ab1afde2b6df0f9"
+		}
+	]
+}

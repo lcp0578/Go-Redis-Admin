@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"database/sql"
-	"fmt"
+	// "fmt"
 )
 
 type UserEntity struct {
@@ -31,11 +31,11 @@ func SetLastLoginIp(id int32, ip string) (bool, error) {
 	db := Connet()
 	// prepare SQL
 	var stmt *sql.Stmt
-	stmt, err = db.Prepare("UPDATE gra_user SET `last_ip` = ? WHERE id = ?")
+	stmt, err := db.Prepare("UPDATE gra_user SET `last_ip` = ? WHERE id = ?")
 	if err != nil {
 		return false, err
 	}
-	result, err := stmt.Exec(ip, id)
+	_, err = stmt.Exec(ip, id)
 	if err != nil {
 		return false, err
 	}

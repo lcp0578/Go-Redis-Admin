@@ -1,11 +1,14 @@
 package v1
 
 import (
+	"Go-Redis-Admin/app/config"
+	"Go-Redis-Admin/src/common/cookie"
 	"Go-Redis-Admin/src/common/crypto"
 	"Go-Redis-Admin/src/common/mysql"
 	"Go-Redis-Admin/src/common/response"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
@@ -61,15 +64,27 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 	var ip = r.RemoteAddr
 	_, err := mysql.SetLastLoginIp(userId, ip)
 	// 设置用户的cookie
-	plainText := "lcp0578ewuyuy"
-	keyText := "avsnThsJuJAKiosQ"
+	plainText := strconv.Itoa(int(userId)) + "|" + username
+	keyText := config.UserAesKey
 	cipherText, err := crypto.AesEncode(plainText, keyText)
-	log.Println("cipherText", err)
-	log.Println(cipherText)
+	if err != nil {
+		jr.Code = 7
+		jr.Msg = "加密失败"
+		response.OuputJson(w, jr)
+		return
+	}
+	cookie.Set(w, "grd_username", username, "/", 8600)
+	cookie.Set(w, "grd_auth", cipherText, "/", 8600)
+
+	log.Println("cipherText", cipherText)
 	plainTextCopy, err := crypto.AesDecode(cipherText, keyText)
-	log.Println("plainTextCopy", err)
-	log.Println(plainTextCopy)
-	w.Write([]byte("API V1, login"))
+	log.Println("plainTextCopy", plainTextCopy)
+
+	jr.Code = 1
+	jr.Msg = "登录成功"
+	response.OuputJson(w, jr)
+	return
+
 }
 
 func checkPass(username, password string) int32 {

@@ -38,10 +38,11 @@ func AesEncode(plainText, keyText string) (string, error) {
 	cfb := cipher.NewCFBEncrypter(c, commonIV)
 	cipherText := make([]byte, len(plainText))
 	cfb.XORKeyStream(cipherText, []byte(plainText))
-	return string(cipherText), nil
+	return hex.EncodeToString(cipherText), nil
 }
 
 func AesDecode(cipherText, keyText string) (string, error) {
+	cipherByte, err := hex.DecodeString(cipherText)
 	// 创建加密算法aes
 	c, err := aes.NewCipher([]byte(keyText))
 	if err != nil {
@@ -50,6 +51,6 @@ func AesDecode(cipherText, keyText string) (string, error) {
 	// 解密字符串
 	cfbdec := cipher.NewCFBDecrypter(c, commonIV)
 	plainText := make([]byte, len(cipherText))
-	cfbdec.XORKeyStream(plainText, []byte(cipherText))
+	cfbdec.XORKeyStream(plainText, cipherByte)
 	return string(plainText), nil
 }

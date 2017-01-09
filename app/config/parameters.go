@@ -3,3 +3,5 @@
  *
  **/
 package config
+
+var UserAesKey = "aSdFgHjKl0578zXc"

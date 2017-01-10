@@ -35,19 +35,19 @@
 							<div class="panel-body" style="padding:30px;">
 								<div class="form-group">
 									<div class="field field-icon-right">
-										<input type="text" class="input" name="admin" placeholder="登录账号" data-validate="required:请填写账号,length#>=5:账号长度不符合要求" />
+										<input type="text" class="input" name="admin" id="username" placeholder="登录账号" data-validate="required:请填写账号,length#>=5:账号长度不符合要求" />
 										<span class="icon icon-user"></span>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="field field-icon-right">
-										<input type="password" class="input" name="password" placeholder="登录密码" data-validate="required:请填写密码,length#>=8:密码长度不符合要求" />
+										<input type="password" class="input" name="password" id="password" placeholder="登录密码" data-validate="required:请填写密码,length#>=8:密码长度不符合要求" />
 										<span class="icon icon-key"></span>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="field">
-										<input type="text" class="input" name="passcode" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码" />
+										<input type="text" class="input" name="passcode" id="captcha" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码" />
 										<img src="/api/v1/newcaptcha" width="80" height="32" class="passcode" />
 									</div>
 								</div>

@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 /**
@@ -17,7 +18,12 @@ func GetUserInfo(req *http.Request) (int32, string) {
 	keyText := config.UserAesKey
 	plainTextCopy, err := crypto.AesDecode(auth, keyText)
 	log.Println("plainTextCopy", plainTextCopy)
-	return 0, auth
+	plainTextSlice := strings.Split(plainTextCopy, "|")
+	userId, err := strconv.ParseInt(plainTextSlice[0], 10, 32)
+	if err != nil {
+		return 0, ""
+	}
+	return int32(userId), plainTextSlice[1]
 }
 
 /**

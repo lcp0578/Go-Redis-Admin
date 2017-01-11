@@ -44,6 +44,7 @@ func (h *Handlers) ReloadcaptchaAction(w http.ResponseWriter, r *http.Request) {
 	if captcha.Reload(captchaId) {
 		captcha.WriteImage(w, captchaId, StdWidth, StdHeight)
 	} else {
+		h.NewcaptchaAction(w, r)
 		log.Println("API V1, captcha reload faild")
 	}
 }
@@ -74,4 +75,14 @@ func (h *Handlers) VerifycaptchaAction(w http.ResponseWriter, r *http.Request) {
 		jr.Msg = "success"
 	}
 	response.OuputJson(w, jr)
+}
+
+func verifyCaptcha(r *http.Request, captchaVal string) bool {
+	var captchaId = cookie.Get(r, "captchaId")
+	if captchaId == "" {
+		return false
+	}
+	log.Println("captchaId", captchaId)
+	log.Println("captchaVal", captchaVal)
+	return captcha.VerifyString(captchaId, captchaVal)
 }

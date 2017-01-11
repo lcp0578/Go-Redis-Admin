@@ -1,6 +1,6 @@
 $(function(){
 	$(".passcode").click(function(){
-		$(this).attr("src", "/api/v1/reloadcaptcha?t=" + Date.parse(new Date()));
+		$(this).attr("src", API_URI + "reloadcaptcha?t=" + Date.parse(new Date()));
 	});
 	$('.btn-submit').on('click', function(){
 		var username = $('#username').val();
@@ -24,7 +24,14 @@ $(function(){
             captcha: captcha
         }
 		$.post(API_URI + 'login', jsonData, function(data){
-            console.log(data);
+            var jobj = JSON.parse(data);
+            if(jobj.Code == 1){
+                location.href = "/";
+            }else{
+                $('.passcode').attr("src", API_URI + "newcaptcha?t=" + Date.parse(new Date()));
+                layer.msg(jobj.Msg);
+                return false;
+            }
         });
         return false;
 	});

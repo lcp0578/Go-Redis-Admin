@@ -8,6 +8,7 @@ import (
 	// "fmt"
 	"log"
 	"net/http"
+	"os"
 	"reflect"
 	"strings"
 	"text/template"
@@ -50,6 +51,19 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 // main router
 func mainRouter(w http.ResponseWriter, r *http.Request) {
+
+	if strings.HasSuffix(r.URL.Path, ".ico") {
+		log.Println(r.URL.Path)
+		file := strings.Trim(r.URL.Path, "/")
+		f, err := os.Open(file)
+		defer f.Close()
+
+		if err != nil && os.IsNotExist(err) {
+			file = "favicon.ico"
+		}
+		http.ServeFile(w, r, file)
+		return
+	}
 	pathinfo := strings.ToLower(strings.Trim(r.URL.Path, "/"))
 	log.Println("main pathinfo", pathinfo)
 

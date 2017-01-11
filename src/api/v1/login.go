@@ -35,6 +35,7 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println("password", r.FormValue("password"))
 	var username = r.FormValue("username")
 	var password = r.FormValue("password")
+	var captcha = r.FormValue("captcha")
 	if username == "" {
 		jr.Code = 3
 		jr.Msg = "用户名不能为空"
@@ -47,15 +48,29 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 		response.OuputJson(w, jr)
 		return
 	}
+	if captcha == "" {
+		jr.Code = 5
+		jr.Msg = "验证码不能为空"
+		response.OuputJson(w, jr)
+		return
+	}
+	// 校验验证码
+	log.Println(captcha)
+	if true != verifyCaptcha(r, captcha) {
+		jr.Code = 6
+		jr.Msg = "验证码错误"
+		response.OuputJson(w, jr)
+		return
+	}
 	// 校验密码
 	userId := checkPass(username, password)
 	if userId == -1 {
-		jr.Code = 5
+		jr.Code = 7
 		jr.Msg = "用户名不存在"
 		response.OuputJson(w, jr)
 		return
 	} else if userId == -2 {
-		jr.Code = 6
+		jr.Code = 8
 		jr.Msg = "密码不正确"
 		response.OuputJson(w, jr)
 		return
@@ -68,7 +83,7 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 	keyText := config.UserAesKey
 	cipherText, err := crypto.AesEncode(plainText, keyText)
 	if err != nil {
-		jr.Code = 7
+		jr.Code = 9
 		jr.Msg = "加密失败"
 		response.OuputJson(w, jr)
 		return

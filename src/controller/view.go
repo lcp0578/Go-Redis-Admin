@@ -39,6 +39,7 @@ func (h *Handlers) SystemAction(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) TestAction(w http.ResponseWriter, r *http.Request) {
+	checkLogin(w, r)
 	log.Println("view test")
 	t, err := template.ParseFiles("src/views/test.html")
 	if err != nil {

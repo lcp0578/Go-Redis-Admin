@@ -13,7 +13,10 @@ import (
  *   获取用户的信息
  **/
 func GetUserInfo(req *http.Request) (int32, string) {
-	var auth = Get(req, "gra_auth")
+	var auth = Get(req, "grd_auth")
+	if auth == "" {
+		return 0, ""
+	}
 	log.Println("cipherText", auth)
 	keyText := config.UserAesKey
 	plainTextCopy, err := crypto.AesDecode(auth, keyText)

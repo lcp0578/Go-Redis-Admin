@@ -3,6 +3,9 @@ package mysql
 import (
 	"database/sql"
 	// "fmt"
+	"Go-Redis-Admin/src/common/crypto"
+	"Go-Redis-Admin/src/common/lib"
+	"time"
 )
 
 type UserEntity struct {
@@ -42,15 +45,22 @@ func SetLastLoginIp(id int32, ip string) (bool, error) {
 	return true, nil
 }
 
-func CreateUser(username, password string) (bool, error) {
+func CreateUser(username, password, ip string) (int32, error) {
 	db := Connet()
 	var stmt *sql.Stmt
-	stmt, err = db.Prepare("INSERT INTO gra_user(username, password, salt, add_time, status, last_ip) VALUES (?,?,?,?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO gra_user(username, password, salt, add_time, status, last_ip) VALUES (?,?,?,?,?,?)")
 	if err != nil {
-		fmt.Println(err)
-		return
+		//log.Println(err)
+		return 0, err
 	}
-	var salt = ""
-	stmt.Exec(username, i, i%2)
-
+	var salt = lib.StrRand(8, 3)
+	var addTime = time.Now().Format("2006-01-02")
+	password = crypto.Md5Double(password, salt)
+	result, err := stmt.Exec(username, password, salt, addTime, 1, ip)
+	if err != nil {
+		//log.Println(err)
+		return 0, err
+	}
+	lastId, _ := result.LastInsertId()
+	return int32(lastId), nil
 }

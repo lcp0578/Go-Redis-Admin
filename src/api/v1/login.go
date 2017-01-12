@@ -151,4 +151,16 @@ func (*Handlers) CreateAction(w http.ResponseWriter, r *http.Request) {
 		response.OuputJson(w, jr)
 		return
 	}
+	var ip = r.RemoteAddr
+	userId, err := mysql.CreateUser(username, password, ip)
+	if err != nil {
+		jr.Code = 4
+		jr.Msg = "创建失败"
+		response.OuputJson(w, jr)
+		return
+	}
+	jr.Code = 1
+	jr.Msg = "创建成功" + string(userId)
+	response.OuputJson(w, jr)
+	return
 }

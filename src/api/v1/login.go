@@ -11,14 +11,16 @@ import (
 	"strconv"
 )
 
+// init return
+var data = map[string]string{}
+var jr = &response.JsonResponse{
+	0,
+	"faild",
+	data,
+}
+
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
-	// init return
-	var data = map[string]string{}
-	jr := &response.JsonResponse{
-		0,
-		"faild",
-		data,
-	}
+
 	if r.Method != "POST" {
 		jr.Code = 2
 		jr.Msg = "请求出错啦"
@@ -114,4 +116,12 @@ func checkPass(username, password string) int32 {
 		return -2
 	}
 	return user.Id
+}
+
+func (*Handlers) LogoutAction(w http.ResponseWriter, r *http.Request) {
+	cookie.DelUserInfo(w)
+	jr.Code = 1
+	jr.Msg = "退出成功"
+	response.OuputJson(w, jr)
+	return
 }

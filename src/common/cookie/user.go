@@ -46,3 +46,8 @@ func SetUserInfo(w http.ResponseWriter, userId int32, username string) (bool, er
 	Set(w, "gra_auth", cipherText, "/", 8600)
 	return true, nil
 }
+
+func DelUserInfo(w http.ResponseWriter) {
+	Del(w, "gra_username", "/")
+	Del(w, "gra_auth", "/")
+}

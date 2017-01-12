@@ -104,6 +104,9 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 
 }
 
+/**
+ * check username
+ **/
 func checkPass(username, password string) int32 {
 	var user *mysql.UserEntity
 	user, err := mysql.GetUserPass(username)
@@ -118,10 +121,34 @@ func checkPass(username, password string) int32 {
 	return user.Id
 }
 
+/**
+ *  logout
+ **/
 func (*Handlers) LogoutAction(w http.ResponseWriter, r *http.Request) {
 	cookie.DelUserInfo(w)
+	log.Println("auth", cookie.Get(r, "gra_auth"))
 	jr.Code = 1
 	jr.Msg = "退出成功"
 	response.OuputJson(w, jr)
 	return
+}
+
+/**
+ *  create user
+ **/
+func (*Handlers) CreateAction(w http.ResponseWriter, r *http.Request) {
+	var username = r.FormValue("username")
+	var password = r.FormValue("password")
+	if username == "" {
+		jr.Code = 2
+		jr.Msg = "用户名不能为空"
+		response.OuputJson(w, jr)
+		return
+	}
+	if password == "" {
+		jr.Code = 3
+		jr.Msg = "密码不能为空"
+		response.OuputJson(w, jr)
+		return
+	}
 }

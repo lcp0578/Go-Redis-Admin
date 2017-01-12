@@ -41,3 +41,16 @@ func SetLastLoginIp(id int32, ip string) (bool, error) {
 	}
 	return true, nil
 }
+
+func CreateUser(username, password string) (bool, error) {
+	db := Connet()
+	var stmt *sql.Stmt
+	stmt, err = db.Prepare("INSERT INTO gra_user(username, password, salt, add_time, status, last_ip) VALUES (?,?,?,?,?,?)")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	var salt = ""
+	stmt.Exec(username, i, i%2)
+
+}

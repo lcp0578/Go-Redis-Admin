@@ -20,13 +20,25 @@ func (re *redisapi) Connect(network string, addredd string) {
 	//c:=NewConnection(conn)
 	//conn.Close()
 }
-func (re *redisapi) ping() {
-	err := redis.PubSubConn{}.Ping("test")
-	if err != nil {
+func (re *redisapi) Ping() {
+	reply,err:=re.redisconn.Do("PING","test")
+	if err!=nil{
 		fmt.Println(err.Error())
+	}else {
+		fmt.Println(redis.String(reply,err))
 	}
 }
-func (re *redisapi) Get(args ...interface{}){
+func (re *redisapi)Set(args ...interface{}){
+	reply,err:=re.redisconn.Do("SET",args)
+	redis.String(reply,err)
+	if err!=nil {
+		fmt.Println(err.Error())
+	}else {
+		fmt.Println(reply)
+	}
+}
+
+func (re *redisapi) Get(args interface{}){
 	reply,err:=re.redisconn.Do("GET",args)
 	if err!=nil{
 		fmt.Println(err.Error())
@@ -34,4 +46,13 @@ func (re *redisapi) Get(args ...interface{}){
 		fmt.Println(reply)
 	}
 
+}
+
+func (re *redisapi) Delete(args ...interface{}){
+	reply,err:=re.redisconn.Do("DEL",args)
+	if err!=nil{
+		fmt.Println(err.Error())
+	}else {
+		fmt.Println(reply)
+	}
 }

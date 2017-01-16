@@ -3,7 +3,6 @@ package redisserver
 import (
 	"fmt"
 	"github.com/garyburd/redigo/redis"
-	"net/http"
 	"Go-Redis-Admin/src/common/request"
 	"Go-Redis-Admin/src/common/response"
 )
@@ -15,16 +14,16 @@ type redisapi struct {
 }
 
 
-func (re *redisapi) Connect(w http.ResponseWriter,r *http.Request) {
-	if r.Method!="POST"{
+func (re *redisapi) Connect() {
+	if re.input.Request.Method!="POST"{
 		fmt.Println("请求错误")
 	}
 	body,_:=re.input.InputBody()
 	fmt.Println(body)
 	re.input.Request.ParseForm()
-	var network string=r.FormValue("network")
-	var address string=r.FormValue("address")
-	var password string=r.FormValue("password")
+	var network string=re.input.Request.FormValue("network")
+	var address string=re.input.Request.FormValue("address")
+	var password string=re.input.Request.FormValue("password")
 	option:=redis.DialOption{}
 	if password!=""{
 		option=redis.DialPassword(password)

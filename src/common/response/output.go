@@ -12,8 +12,9 @@ func init() {
 
 type Output struct {
 	ResponseWriter http.ResponseWriter
-	Status     int
+	Status         int
 }
+
 func (output *Output) Json(data interface{}, hasIndent bool, coding bool) error {
 	output.ResponseWriter.Header().Set("Content-Type", "application/json; charset=utf-8")
 	var content []byte
@@ -30,13 +31,14 @@ func (output *Output) Json(data interface{}, hasIndent bool, coding bool) error 
 	if coding {
 		content = []byte(stringsToJson(string(content)))
 	}
-	_,err=output.ResponseWriter.Write(content)
+	_, err = output.ResponseWriter.Write(content)
 	return err
 }
 
 func (output *Output) WriteString(content string) {
 	output.ResponseWriter.Write([]byte(content))
 }
+
 func stringsToJson(str string) string {
 	rs := []rune(str)
 	jsons := ""

@@ -5,10 +5,6 @@ import (
 	"net/http"
 )
 
-func init() {
-
-}
-
 type JsonResponse struct {
 	Code int
 	Msg  string

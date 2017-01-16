@@ -52,3 +52,7 @@ func stringsToJson(str string) string {
 	}
 	return jsons
 }
+
+func (output *Output) Xml(data interface{}) error {
+
+}

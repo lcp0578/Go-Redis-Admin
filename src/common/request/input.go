@@ -18,3 +18,16 @@ func (input *Input) InputBody() (string, error) {
 	}
 	return string(contentBody), nil
 }
+
+func (input *Input) IsPost() bool {
+	return input.Request.Method == "POST"
+}
+
+func (input *Input) IsGet() bool {
+	return input.Request.Method == "GET"
+}
+
+func (input *Input) GetValue(key string) string {
+	input.Request.ParseForm()
+	return input.Request.FormValue(key)
+}

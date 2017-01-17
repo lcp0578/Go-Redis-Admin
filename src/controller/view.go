@@ -7,12 +7,13 @@ import (
 )
 
 var ViewBase string = "src/views/"
+var NavActive string = "index"
 
 type Handlers struct{}
 
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view login")
-	t, _ := template.ParseFiles("src/views/login.html")
+	t, _ := template.ParseFiles(ViewBase + "login.html")
 	t.Execute(w, nil)
 }
 
@@ -57,6 +58,35 @@ func (h *Handlers) NotFoundAction(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 }
 
+func (h *Handlers) RedislistAction(w http.ResponseWriter, r *http.Request) {
+	log.Println("view index")
+	loadCommonTpl(w, "redis_list.html")
+}
+
+func (h *Handlers) RedisaddAction(w http.ResponseWriter, r *http.Request) {
+	log.Println("view index")
+	loadCommonTpl(w, "redis_add.html")
+}
+
+func (h *Handlers) KeyslistAction(w http.ResponseWriter, r *http.Request) {
+	log.Println("view index")
+	loadCommonTpl(w, "keys_list.html")
+}
+
+func (h *Handlers) KeysaddAction(w http.ResponseWriter, r *http.Request) {
+	log.Println("view index")
+	loadCommonTpl(w, "keys_add.html")
+}
+
+func (h *Handlers) SearchAction(w http.ResponseWriter, r *http.Request) {
+	log.Println("view index")
+	loadCommonTpl(w, "search.html")
+}
+
+/**
+ * 加载公共头部、导航和底部
+ *
+ **/
 func loadCommonTpl(w http.ResponseWriter, tpl string) {
 	s1, _ := template.ParseFiles(ViewBase+"header.html", ViewBase+"nav.html", ViewBase+tpl, ViewBase+"footer.html")
 	s1.ExecuteTemplate(w, "header", nil)

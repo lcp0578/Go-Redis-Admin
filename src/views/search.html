@@ -1,0 +1,25 @@
+{{define "content"}}
+{{template "header"}}
+{{template "nav"}}
+<div class="admin">
+    <form method="post">
+        <div class="line">
+            <div class="x3-move x1">
+                 <select class="input">
+                    <option>无前缀</option>
+                    <option>用户</option>
+                    <option>游戏</option>
+                    <option>其他</option>
+                </select>
+            </div>
+            <div class="x1">
+                <input type="text" class="input" id="keyword" name="keyword" size="20" placeholder="请输入搜索的内容" />  
+            </div>
+            <div class="x1">
+                <input class="button" type="submit" value="搜索" />
+            </div>
+        </div>
+    </form>
+</div>
+{{template "footer"}}
+{{end}}

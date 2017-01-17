@@ -12,39 +12,40 @@
             <a class="button button-little bg-yellow" href="login.html">注销登录</a>
         </span>
             <ul class="nav nav-inline admin-nav">
-                <li class="active">
-                    <a href="index.html" class="icon-home"> 开始</a>
+                <li {{if eq .NavActive "index"}} class="active" {{end}}>
+                    <a href="/" class="icon-home"> 开始</a>
                     <ul>
-                        <li><a href="system.html">系统设置</a></li>
-                        <li><a href="content.html">内容管理</a></li>
-                        <li><a href="#">订单管理</a></li>
-                        <li class="active"><a href="#">会员管理</a></li>
-                        <li><a href="#">文件管理</a></li>
-                        <li><a href="#">栏目管理</a></li>
+                        <li><a href="/system">系统设置</a></li>
+                        <li><a href="/search">快速搜索</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="system.html" class="icon-cog"> 系统</a>
+                <li {{if eq .NavActive "system"}} class="active" {{end}}>
+                    <a href="/system" class="icon-cog"> 系统</a>
                     <ul>
                         <li><a href="#">全局设置</a></li>
                         <li class="active"><a href="#">系统设置</a></li>
-                        <li><a href="#">会员设置</a></li>
-                        <li><a href="#">积分设置</a></li>
+                        <li><a href="#">用户设置</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="content.html" class="icon-file-text"> 内容</a>
+                <li {{if eq .NavActive "redis"}} class="active" {{end}}>
+                    <a href="/redislist" class="icon-support"> Redis</a>
                     <ul>
-                        <li><a href="#">添加内容</a></li>
-                        <li class="active"><a href="#">内容管理</a></li>
+                        <li class="active"><a href="/redislist">Redis管理</a></li>
+                        <li><a href="/redisadd">添加Redis</a></li>
                         <li><a href="#">分类设置</a></li>
                         <li><a href="#">链接管理</a></li>
                     </ul>
                 </li>
-                <li><a href="#" class="icon-shopping-cart"> 订单</a></li>
-                <li><a href="#" class="icon-user"> 会员</a></li>
-                <li><a href="#" class="icon-file"> 文件</a></li>
-                <li><a href="#" class="icon-th-list"> 栏目</a></li>
+                <li {{if eq .NavActive "keys"}} class="active" {{end}}>
+                    <a href="/keyslist" class="icon-anchor"> Keys</a>
+                    <ul>
+                        <li class="active"><a href="/keyslist">Keys管理</a></li>
+                        <li><a href="/keysadd">添加Keys</a></li>
+                    </ul>
+                </li>
+                <li {{if eq .NavActive "search"}} class="active" {{end}}>
+                    <a href="/search" class="icon-search"> 搜索</a>
+                </li>
             </ul>
         </div>
         <div class="admin-bread">

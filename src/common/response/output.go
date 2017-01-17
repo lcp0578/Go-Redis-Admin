@@ -54,5 +54,5 @@ func stringsToJson(str string) string {
 }
 
 func (output *Output) Xml(data interface{}) error {
-
+	return nil
 }

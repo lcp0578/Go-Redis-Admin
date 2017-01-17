@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+var ViewBase string = "src/views/"
+
 type Handlers struct{}
 
 func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
@@ -16,8 +18,9 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) IndexAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
-	t, _ := template.ParseFiles("src/views/index.html")
-	t.Execute(w, nil)
+	// t, _ := template.ParseFiles("src/views/index.html")
+	// t.Execute(w, nil)
+	loadCommonTpl(w, "index.html")
 }
 
 func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
@@ -52,4 +55,13 @@ func (h *Handlers) NotFoundAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view Not Found")
 	t, _ := template.ParseFiles("src/views/notfound.html")
 	t.Execute(w, nil)
+}
+
+func loadCommonTpl(w http.ResponseWriter, tpl string) {
+	s1, _ := template.ParseFiles(ViewBase+"header.html", ViewBase+"nav.html", ViewBase+tpl, ViewBase+"footer.html")
+	s1.ExecuteTemplate(w, "header", nil)
+	s1.ExecuteTemplate(w, "header", nil)
+	s1.ExecuteTemplate(w, "content", nil)
+	s1.ExecuteTemplate(w, "footer", nil)
+	s1.Execute(w, nil)
 }

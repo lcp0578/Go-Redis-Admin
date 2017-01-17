@@ -46,6 +46,8 @@ func (re *redisapi) Ping() {
 	}else {
 		fmt.Println(redis.String(reply,err))
 	}
+	result,_:=redis.String(reply,err)
+	re.output.WriteString(result)
 }
 func (re *redisapi)Set(){
 	var args []interface{}
@@ -56,6 +58,8 @@ func (re *redisapi)Set(){
 	}else {
 		fmt.Println(reply)
 	}
+	result,_:=redis.String(reply,err)
+	re.output.WriteString(result)
 }
 
 func (re *redisapi) Get(){
@@ -77,4 +81,7 @@ func (re *redisapi) Delete(){
 	}else {
 		fmt.Println(reply)
 	}
+}
+func(re *redisapi)Pool(){
+
 }

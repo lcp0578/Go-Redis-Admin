@@ -70,7 +70,8 @@ func (re *redisapi) Get(){
 	}else {
 		fmt.Println(reply)
 	}
-
+	result,_:=redis.String(reply,err)
+	re.output.WriteString(result)
 }
 
 func (re *redisapi) Delete(){
@@ -81,7 +82,21 @@ func (re *redisapi) Delete(){
 	}else {
 		fmt.Println(reply)
 	}
+	result,_:=redis.String(reply,err)
+	re.output.WriteString(result)
 }
+func (re *redisapi)SetTTL(){
+	var args []interface{}
+	reply,err:=re.Redisconn.Do("TTL",args)
+	if err!=nil{
+		fmt.Println(err.Error())
+	}else{
+		fmt.Println(reply)
+	}
+	result,_:=redis.String(reply,err)
+	re.output.WriteString(result)
+}
+
 func(re *redisapi)Pool(){
 
 }

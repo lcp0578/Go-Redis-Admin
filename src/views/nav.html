@@ -12,14 +12,14 @@
             <a class="button button-little bg-yellow" href="login.html">注销登录</a>
         </span>
             <ul class="nav nav-inline admin-nav">
-                <li {{if eq .NavActive "index"}} class="active" {{end}}>
+                <li >
                     <a href="/" class="icon-home"> 开始</a>
                     <ul>
                         <li><a href="/system">系统设置</a></li>
                         <li><a href="/search">快速搜索</a></li>
                     </ul>
                 </li>
-                <li {{if eq .NavActive "system"}} class="active" {{end}}>
+                <li class="active" >
                     <a href="/system" class="icon-cog"> 系统</a>
                     <ul>
                         <li><a href="#">全局设置</a></li>
@@ -27,7 +27,7 @@
                         <li><a href="#">用户设置</a></li>
                     </ul>
                 </li>
-                <li {{if eq .NavActive "redis"}} class="active" {{end}}>
+                <li >
                     <a href="/redislist" class="icon-support"> Redis</a>
                     <ul>
                         <li class="active"><a href="/redislist">Redis管理</a></li>
@@ -36,14 +36,14 @@
                         <li><a href="#">链接管理</a></li>
                     </ul>
                 </li>
-                <li {{if eq .NavActive "keys"}} class="active" {{end}}>
+                <li>
                     <a href="/keyslist" class="icon-anchor"> Keys</a>
                     <ul>
                         <li class="active"><a href="/keyslist">Keys管理</a></li>
                         <li><a href="/keysadd">添加Keys</a></li>
                     </ul>
                 </li>
-                <li {{if eq .NavActive "search"}} class="active" {{end}}>
+                <li>
                     <a href="/search" class="icon-search"> 搜索</a>
                 </li>
             </ul>

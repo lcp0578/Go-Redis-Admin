@@ -21,7 +21,8 @@ func (h *Handlers) IndexAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
 	// t, _ := template.ParseFiles("src/views/index.html")
 	// t.Execute(w, nil)
-	loadCommonTpl(w, "index.html")
+	data := []string{"NavActive": "index"}
+	loadCommonTpl(w, "index.html", data)
 }
 
 func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
@@ -87,11 +88,10 @@ func (h *Handlers) SearchAction(w http.ResponseWriter, r *http.Request) {
  * 加载公共头部、导航和底部
  *
  **/
-func loadCommonTpl(w http.ResponseWriter, tpl string) {
+func loadCommonTpl(w http.ResponseWriter, tpl string, data interface{}) {
 	s1, _ := template.ParseFiles(ViewBase+"header.html", ViewBase+"nav.html", ViewBase+tpl, ViewBase+"footer.html")
-	s1.ExecuteTemplate(w, "header", nil)
 	s1.ExecuteTemplate(w, "header", nil)
 	s1.ExecuteTemplate(w, "content", nil)
 	s1.ExecuteTemplate(w, "footer", nil)
-	s1.Execute(w, nil)
+	s1.Execute(w, data)
 }

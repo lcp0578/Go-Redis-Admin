@@ -1,6 +1,6 @@
 {{define "content"}}
-{{template "header"}}
-{{template "nav"}}
+{{template "header" .}}
+{{template "nav" .}}
 <div class="admin">
     <form method="post">
         <div class="panel admin-panel">
@@ -147,6 +147,5 @@
     </form>
     <br />
     <p class="text-right text-gray">基于<a class="text-gray" target="_blank" href="http://www.pintuer.com">拼图前端框架</a>构建</p>
-</div>
-{{template "footer"}}
+{{template "footer" .}}
 {{end}}

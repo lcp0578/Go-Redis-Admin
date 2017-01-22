@@ -7,7 +7,9 @@ import (
 )
 
 var ViewBase string = "src/views/"
-var TplMap = make(map[string]string)
+var TplMap = map[string]string{
+	"NavActive": "index",
+}
 
 type Handlers struct{}
 
@@ -18,9 +20,7 @@ func (h *Handlers) LoginAction(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) IndexAction(w http.ResponseWriter, r *http.Request) {
-	log.Println("view index")
-	// t, _ := template.ParseFiles("src/views/index.html")
-	// t.Execute(w, nil)
+	log.Println(TplMap)
 	TplMap["NavActive"] = "index"
 	loadCommonTpl(w, "index.html", TplMap)
 }
@@ -35,12 +35,8 @@ func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) SystemAction(w http.ResponseWriter, r *http.Request) {
-	log.Println("view System")
-	t, err := template.ParseFiles("src/views/system.html")
-	if err != nil {
-		log.Println("parse view error", err)
-	}
-	t.Execute(w, nil)
+	TplMap["NavActive"] = "system"
+	loadCommonTpl(w, "system.html", TplMap)
 }
 
 func (h *Handlers) TestAction(w http.ResponseWriter, r *http.Request) {
@@ -61,26 +57,31 @@ func (h *Handlers) NotFoundAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) RedislistAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
+	TplMap["NavActive"] = "redis"
 	loadCommonTpl(w, "redis_list.html", TplMap)
 }
 
 func (h *Handlers) RedisaddAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
+	TplMap["NavActive"] = "redis"
 	loadCommonTpl(w, "redis_add.html", TplMap)
 }
 
 func (h *Handlers) KeyslistAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
+	TplMap["NavActive"] = "keys"
 	loadCommonTpl(w, "keys_list.html", TplMap)
 }
 
 func (h *Handlers) KeysaddAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
+	TplMap["NavActive"] = "keys"
 	loadCommonTpl(w, "keys_add.html", TplMap)
 }
 
 func (h *Handlers) SearchAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
+	TplMap["NavActive"] = "search"
 	loadCommonTpl(w, "search.html", TplMap)
 }
 
@@ -91,7 +92,4 @@ func (h *Handlers) SearchAction(w http.ResponseWriter, r *http.Request) {
 func loadCommonTpl(w http.ResponseWriter, tpl string, data interface{}) {
 	s1, _ := template.ParseFiles(ViewBase+"header.html", ViewBase+"nav.html", ViewBase+tpl, ViewBase+"footer.html")
 	s1.ExecuteTemplate(w, "content", data)
-	// s1.ExecuteTemplate(w, "header", nil)
-	// s1.ExecuteTemplate(w, "nav", nil)
-	// s1.ExecuteTemplate(w, "footer", nil)
 }

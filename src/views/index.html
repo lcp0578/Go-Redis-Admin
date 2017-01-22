@@ -1,5 +1,5 @@
 {{define "content"}}
-{{template "header"}}
+{{template "header" .}}
 {{template "nav" .}}
 		<div class="admin">
 			<div class="line-big">
@@ -9,7 +9,7 @@
 							<img src="/res/images/face.jpg" width="120" class="radius-circle" />
 							<br /> admin
 						</div>
-						<div class="panel-foot bg-back border-back">您好，admin，这是您第100次登录，上次登录为2014-10-1。</div>
+						<div class="panel-foot bg-back border-back">您好，admin，这是您第100次登录，上次登录为2014-10-1。{{ .NavActive}}</div>
 					</div>
 					<br />
 					<div class="panel">
@@ -69,6 +69,5 @@
 				</div>
 			</div>
 			<p class="text-right text-gray">基于<a class="text-gray" target="_blank" href="http://www.pintuer.com">拼图前端框架</a>构建</p>
-		</div>
-{{template "footer"}}
+{{template "footer" .}}
 {{end}}

@@ -7,7 +7,7 @@ import (
 )
 
 var ViewBase string = "src/views/"
-var NavActive string = "index"
+var TplMap = make(map[string]string)
 
 type Handlers struct{}
 
@@ -21,8 +21,8 @@ func (h *Handlers) IndexAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
 	// t, _ := template.ParseFiles("src/views/index.html")
 	// t.Execute(w, nil)
-	data := []string{"NavActive": "index"}
-	loadCommonTpl(w, "index.html", data)
+	TplMap["NavActive"] = "index"
+	loadCommonTpl(w, "index.html", TplMap)
 }
 
 func (h *Handlers) ContentAction(w http.ResponseWriter, r *http.Request) {
@@ -61,27 +61,27 @@ func (h *Handlers) NotFoundAction(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) RedislistAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
-	loadCommonTpl(w, "redis_list.html")
+	loadCommonTpl(w, "redis_list.html", TplMap)
 }
 
 func (h *Handlers) RedisaddAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
-	loadCommonTpl(w, "redis_add.html")
+	loadCommonTpl(w, "redis_add.html", TplMap)
 }
 
 func (h *Handlers) KeyslistAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
-	loadCommonTpl(w, "keys_list.html")
+	loadCommonTpl(w, "keys_list.html", TplMap)
 }
 
 func (h *Handlers) KeysaddAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
-	loadCommonTpl(w, "keys_add.html")
+	loadCommonTpl(w, "keys_add.html", TplMap)
 }
 
 func (h *Handlers) SearchAction(w http.ResponseWriter, r *http.Request) {
 	log.Println("view index")
-	loadCommonTpl(w, "search.html")
+	loadCommonTpl(w, "search.html", TplMap)
 }
 
 /**
@@ -90,8 +90,8 @@ func (h *Handlers) SearchAction(w http.ResponseWriter, r *http.Request) {
  **/
 func loadCommonTpl(w http.ResponseWriter, tpl string, data interface{}) {
 	s1, _ := template.ParseFiles(ViewBase+"header.html", ViewBase+"nav.html", ViewBase+tpl, ViewBase+"footer.html")
-	s1.ExecuteTemplate(w, "header", nil)
-	s1.ExecuteTemplate(w, "content", nil)
-	s1.ExecuteTemplate(w, "footer", nil)
-	s1.Execute(w, data)
+	s1.ExecuteTemplate(w, "content", data)
+	// s1.ExecuteTemplate(w, "header", nil)
+	// s1.ExecuteTemplate(w, "nav", nil)
+	// s1.ExecuteTemplate(w, "footer", nil)
 }

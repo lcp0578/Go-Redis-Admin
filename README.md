@@ -6,6 +6,6 @@
 	\____/\____/  /_/ |_|\___/\__,_/_/____/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
 
 
-Another web interface to manage Redis databases. Power by golang and pintuer.
+Another web interface to manage Redis databases. Power by golang and pintuer UI.
 
 database: See [database](doc/database.md) for details.

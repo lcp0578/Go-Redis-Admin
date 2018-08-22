@@ -1,8 +1,8 @@
 package cookie
 
 import (
-	"Go-Redis-Admin/app/config"
-	"Go-Redis-Admin/src/common/crypto"
+	"github.com/lcp0578/Go-Redis-Admin/app/config"
+	"github.com/lcp0578/Go-Redis-Admin/src/common/crypto"
 	"log"
 	"net/http"
 	"strconv"

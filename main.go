@@ -1,11 +1,9 @@
 package main
 
 import (
-	"Go-Redis-Admin/src/api/v1"
-	"Go-Redis-Admin/src/common/exception"
-	"Go-Redis-Admin/src/controller"
-	// "io"
-	// "fmt"
+	"github.com/lcp0578/Go-Redis-Admin/src/api/v1"
+	"github.com/lcp0578/Go-Redis-Admin/src/common/exception"
+	"github.com/lcp0578/Go-Redis-Admin/src/controller"
 	"log"
 	"net/http"
 	"os"
@@ -25,22 +23,7 @@ func main() {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
-func sayhelloName(w http.ResponseWriter, r *http.Request) {
-	//	r.ParseForm()                //解析参数，默认是不会解析的
-	//	fmt.Println("form:", r.Form) //这些信息是输出到服务器端的打印信息
-	//	fmt.Println("path", r.URL.Path)
-	//	fmt.Println("scheme", r.URL.Scheme)
-	//	fmt.Println("r.Form[\"test\"]", r.Form["test"])
-	//	for k, v := range r.Form {
-	//		fmt.Println("key:", k)
-	//		fmt.Println("val:", strings.Join(v, ""))
-	//	}
-	log.Println("/")
-	t, _ := template.ParseFiles("views/index.html")
-	t.Execute(w, nil)
-	//w.Write([]byte("Hello, I'm coming..."))
-	//fmt.Fprintf(w, "Hello, I'm coming...") //这个写入到w的是输出到客户端的
-}
+
 
 func login(w http.ResponseWriter, r *http.Request) {
 	log.Println("/login")

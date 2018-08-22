@@ -2,9 +2,8 @@ package mysql
 
 import (
 	"database/sql"
-	// "fmt"
-	"Go-Redis-Admin/src/common/crypto"
-	"Go-Redis-Admin/src/common/lib"
+	"github.com/lcp0578/Go-Redis-Admin/src/common/crypto"
+	"github.com/lcp0578/Go-Redis-Admin/src/common/lib"
 	"time"
 )
 

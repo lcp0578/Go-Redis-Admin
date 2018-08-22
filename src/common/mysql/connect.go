@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"Go-Redis-Admin/app/config"
+	"github.com/lcp0578/Go-Redis-Admin/app/config"
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"

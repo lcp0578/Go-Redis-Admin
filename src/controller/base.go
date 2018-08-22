@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"Go-Redis-Admin/src/common/cookie"
+	"github.com/lcp0578/Go-Redis-Admin/src/common/cookie"
 	"log"
 	"net/http"
 )
